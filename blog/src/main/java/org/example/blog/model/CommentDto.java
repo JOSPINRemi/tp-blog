@@ -1,15 +1,15 @@
 package org.example.blog.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
-public class Comment {
+public class CommentDto {
     private UUID id;
     private String username;
     private String email;

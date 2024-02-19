@@ -1,8 +1,9 @@
 package org.example.blog.controller;
 
 import lombok.AllArgsConstructor;
-import org.example.blog.model.Comment;
-import org.example.blog.service.Service;
+import org.example.blog.entities.Comment;
+import org.example.blog.model.CommentDto;
+import org.example.blog.service.CommentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,19 +13,23 @@ import java.util.UUID;
 @RequestMapping("/api/v1/comment")
 @AllArgsConstructor
 public class CommentRestController {
-    private Service<Comment> commentService;
+    private final CommentService commentService;
+
+    public CommentRestController(CommentService commentService) {
+        this.commentService = commentService;
+    }
 
     @PostMapping("/add")
-    public Comment createComment(@RequestBody Comment comment) {
-        return commentService.create(comment);
+    public CommentDto createComment(@RequestBody CommentDto commentDto) {
+        return commentService.addComment(commentDto);
     }
 
     @GetMapping("/comments")
-    public List<Comment> getAllComments() {
-        return commentService.getAll();
+    public List<CommentDto> getAllComments() {
+        return commentService.listComments();
     }
 
-    @GetMapping("/comment/{id}")
+    /*@GetMapping("/comment/{id}")
     public Comment getCommentById(@PathVariable("id") UUID id) {
         return commentService.getById(id);
     }
@@ -37,5 +42,5 @@ public class CommentRestController {
     @DeleteMapping("/comment/{id}")
     public void deleteComment(@PathVariable UUID id) {
         commentService.delete(id);
-    }
+    }*/
 }

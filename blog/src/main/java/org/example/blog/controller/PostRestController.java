@@ -1,8 +1,9 @@
 package org.example.blog.controller;
 
 import lombok.AllArgsConstructor;
-import org.example.blog.model.Post;
-import org.example.blog.service.Service;
+import org.example.blog.entities.Post;
+import org.example.blog.model.PostDto;
+import org.example.blog.service.PostService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,19 +13,19 @@ import java.util.UUID;
 @RequestMapping("/api/v1/post")
 @AllArgsConstructor
 public class PostRestController {
-    private Service<Post> postService;
+    private final PostService postService;
 
     @PostMapping("/add")
-    public Post createPost(@RequestBody Post post) {
-        return postService.create(post);
+    public PostDto createPost(@RequestBody PostDto postDto) {
+        return postService.create(postDto);
     }
 
     @GetMapping("/posts")
-    public List<Post> getAllPosts() {
-        return postService.getAll();
+    public List<PostDto> getAllPosts() {
+        return postService.listPosts();
     }
 
-    @GetMapping("/post/{id}")
+    /*@GetMapping("/post/{id}")
     public Post getPostById(@PathVariable("id") UUID id) {
         return postService.getById(id);
     }
@@ -37,5 +38,5 @@ public class PostRestController {
     @DeleteMapping("/post/{id}")
     public void deletePost(@PathVariable UUID id) {
         postService.delete(id);
-    }
+    }*/
 }

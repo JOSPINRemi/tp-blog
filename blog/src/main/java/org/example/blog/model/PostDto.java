@@ -1,19 +1,17 @@
 package org.example.blog.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Map;
 import java.util.UUID;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@Builder
 @AllArgsConstructor
-public class Post {
+public class PostDto {
     private UUID id;
     private String title;
     private String description;
     private String content;
-    private Map<UUID, Comment> comments;
 }
