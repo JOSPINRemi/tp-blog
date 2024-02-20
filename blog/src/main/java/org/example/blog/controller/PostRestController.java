@@ -1,44 +1,44 @@
 package org.example.blog.controller;
 
 import org.example.blog.model.PostDto;
-import org.example.blog.service.PostService;
+import org.example.blog.service.BlogService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/post")
+@RequestMapping("/api/v1")
 public class PostRestController {
-    private final PostService postService;
+    private final BlogService blogService;
 
-    public PostRestController(PostService postService) {
-        this.postService = postService;
+    public PostRestController(BlogService blogService) {
+        this.blogService = blogService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/post/add")
     public PostDto createPost(@RequestBody PostDto postDto) {
         System.out.println(postDto.getTitle());
-        return postService.create(postDto);
+        return blogService.createPost(postDto);
     }
 
     @GetMapping("/posts")
     public List<PostDto> getAllPosts() {
-        return postService.listPosts();
+        return blogService.listPosts();
     }
 
-    @GetMapping("/post/{id}")
+    @GetMapping("/post/details/{id}")
     public PostDto getPostById(@PathVariable("id") UUID id) {
-        return postService.findById(id);
+        return blogService.findPostById(id);
     }
 
-    @PutMapping("/post/{id}")
+    @PutMapping("/post/update/{id}")
     public PostDto updatePost(@PathVariable UUID id, @RequestBody PostDto postDto) {
-        return postService.update(id, postDto);
+        return blogService.updatePost(id, postDto);
     }
 
-    @DeleteMapping("/post/{id}")
+    @DeleteMapping("/post/delete/{id}")
     public void deletePost(@PathVariable UUID id) {
-        postService.delete(id);
+        blogService.deletePost(id);
     }
 }

@@ -7,8 +7,7 @@ public class CommentDto {
     private String username;
     private String email;
     private String content;
-
-    private PostDto post;
+    private PostDto postDto;
 
     public CommentDto(UUID id, String username, String email, String content) {
         this.id = id;
@@ -50,5 +49,13 @@ public class CommentDto {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public PostDto getPostDto() {
+        return postDto;
+    }
+
+    public void setPostDto(PostDto postDto) {
+        this.postDto = postDto;
     }
 }

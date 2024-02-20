@@ -1,43 +1,45 @@
 package org.example.blog.controller;
 
+import org.example.blog.entities.Post;
 import org.example.blog.model.CommentDto;
-import org.example.blog.service.CommentService;
+import org.example.blog.model.PostDto;
+import org.example.blog.service.BlogService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/comment")
+@RequestMapping("/api/v1")
 public class CommentRestController {
-    private final CommentService commentService;
+    private final BlogService blogService;
 
-    public CommentRestController(CommentService commentService) {
-        this.commentService = commentService;
+    public CommentRestController(BlogService blogService) {
+        this.blogService = blogService;
     }
 
-    @PostMapping("/add/{postId}")
+    @PostMapping("/comment/add/{postId}")
     public CommentDto createComment(@RequestBody CommentDto commentDto, @PathVariable UUID postId) {
-        return commentService.addComment(postId, commentDto);
+        return blogService.addComment(postId, commentDto);
     }
 
     @GetMapping("/comments")
     public List<CommentDto> getAllComments() {
-        return commentService.listComments();
+        return blogService.listComments();
     }
 
-    @GetMapping("/comment/{id}")
+    @GetMapping("/comment/details/{id}")
     public CommentDto getCommentById(@PathVariable("id") UUID id) {
-        return commentService.findById(id);
+        return blogService.findCommentById(id);
     }
 
-    @PutMapping("/comment/{id}")
+    @PutMapping("/comment/update/{id}")
     public CommentDto updateComment(@PathVariable UUID id, @RequestBody CommentDto commentDto) {
-        return commentService.update(id, commentDto);
+        return blogService.updateComment(id, commentDto);
     }
 
-    @DeleteMapping("/comment/{id}")
+    @DeleteMapping("/comment/delete/{id}")
     public void deleteComment(@PathVariable UUID id) {
-        commentService.delete(id);
+        blogService.deleteComment(id);
     }
 }
