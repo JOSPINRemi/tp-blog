@@ -1,7 +1,5 @@
 package org.example.blog.controller;
 
-import lombok.AllArgsConstructor;
-import org.example.blog.entities.Comment;
 import org.example.blog.model.CommentDto;
 import org.example.blog.service.CommentService;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +9,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/comment")
-@AllArgsConstructor
 public class CommentRestController {
     private final CommentService commentService;
 
@@ -19,9 +16,9 @@ public class CommentRestController {
         this.commentService = commentService;
     }
 
-    @PostMapping("/add")
-    public CommentDto createComment(@RequestBody CommentDto commentDto) {
-        return commentService.addComment(commentDto);
+    @PostMapping("/add/{postId}")
+    public CommentDto createComment(@RequestBody CommentDto commentDto, @PathVariable UUID postId) {
+        return commentService.addComment(postId, commentDto);
     }
 
     @GetMapping("/comments")
@@ -29,18 +26,18 @@ public class CommentRestController {
         return commentService.listComments();
     }
 
-    /*@GetMapping("/comment/{id}")
-    public Comment getCommentById(@PathVariable("id") UUID id) {
-        return commentService.getById(id);
+    @GetMapping("/comment/{id}")
+    public CommentDto getCommentById(@PathVariable("id") UUID id) {
+        return commentService.findById(id);
     }
 
     @PutMapping("/comment/{id}")
-    public Comment updateComment(@PathVariable UUID id, @RequestBody Comment comment) {
-        return commentService.update(id, comment);
+    public CommentDto updateComment(@PathVariable UUID id, @RequestBody CommentDto commentDto) {
+        return commentService.update(id, commentDto);
     }
 
     @DeleteMapping("/comment/{id}")
     public void deleteComment(@PathVariable UUID id) {
         commentService.delete(id);
-    }*/
+    }
 }
